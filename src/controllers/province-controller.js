@@ -1,10 +1,14 @@
 import { express } from "express";
 import { Router } from "express";
+import ProvinceService from './../services/province-service.js'
+const svc = new ProvinceService();
 let router = Router()
-router.get('/api/province', (req, res) => { // EndPoint "/saludar"
+
+
+router.get('', async (req, res) => { // EndPoint "/saludar"
     res.status(200).send(provinces);
 })
-router.get('/api/province/:id', (req, res) => { // EndPoint "/saludar"
+router.get('/:id', async (req, res) => { // EndPoint "/saludar"
     const id = parseInt(req.params.id);    
     const provincia = provinces.find(provincia => provincia.id === id);
     if (provincia) {
@@ -13,7 +17,7 @@ router.get('/api/province/:id', (req, res) => { // EndPoint "/saludar"
         res.status(404).send("Provincia no encontrada");
     }
 })
-router.post("/api/province", (req, res) => {
+router.post("", async (req, res) => {
     const {name, full_name, latitude, longitude, display_order } = req.body;
     if (!name || name.length < 3) {
         return res.status(400).send("El nombre de la provincia es inválido.");
@@ -30,7 +34,7 @@ router.post("/api/province", (req, res) => {
 
     res.status(201).send("Provincia insertada correctamente.");
 })
-router.put('/api/province', (req, res) => {
+router.put('', async (req, res) => {
     const { id, name, full_name, latitude, longitude, display_order } = req.body;
     if (!name || name.length < 3) {
       return res.status(400).send("El nombre de la provincia es inválido.");
@@ -48,7 +52,7 @@ router.put('/api/province', (req, res) => {
 
     res.status(201).send("Provincia modificada correctamente.");
 })
-router.delete('/api/province/:id', (req, res) => {
+router.delete('/:id', async (req, res) => {
     const id = parseInt(req.params.id);
     const borrar = provinces.findIndex(provincia => provincia.id === id);
   

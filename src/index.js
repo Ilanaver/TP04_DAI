@@ -15,8 +15,18 @@ app.use(express.json()); // Middleware para parsear y comprender JSON.
 // Inicio el Server y lo pongo a escuchar.
 //
 app.use('/api/province', ProvinceRouter)
+app.get('/api', async (req, res) => {
+    let respuesta;
+    const returnArray = await svc.getAllAsync();
+    if (returnArray != null){
+    respuesta = res.status(200).json(returnArray);
+    } else {
+    respuesta = res.status(500).send(`Error interno.`);
+    }
+    return respuesta;
+})
 
-app.use('/api/province/:id', ProvinceRouter)
 app.listen(port, () => {
 console.log(`Example app listening on port ${port}`)
 })
+0
